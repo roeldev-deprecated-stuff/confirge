@@ -1,0 +1,45 @@
+{
+  "title": "confirge",
+  "name": "confirge",
+  "homepage": "https://github.com/roeldev/confirge",
+  "description": "A collection of gulp tasks.",
+  "version": "0.0.0",
+  "license": "GPL-2.0+",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roeldev/confirge.git"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.12"
+  },
+  "dependencies": {
+    "deep-extend": "^0.3.3",
+    "graceful-fs": "^3.0.6",
+    "js-yaml": "^3.2.7",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "gulp-mocha": "^2.0.1",
+    "gulp-plumber": "^1.0.0",
+    "jshint": "^2.7.0",
+    "jshint-stylish": "^1.0.1",
+    "run-sequence": "^1.0.2"
+  },
+  "scripts": {
+    "test": "",
+    "setup": "npm install"
+  },
+  "keywords": [
+    "config",
+    "json",
+    "yaml",
+    "variable",
+    "variables",
+    "deep-extend",
+    "extend",
+    "merge"
+  ]
+}
