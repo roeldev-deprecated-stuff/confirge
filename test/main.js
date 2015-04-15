@@ -5,7 +5,7 @@
 'use strict';
 
 var Assert   = require('assert'),
-    Confirge = require('../index.js'),
+    Confirge = require('../lib/index.js'),
     Path     = require('path');
 
 var OBJ_PLAIN = { 'title': 'test js obj', 'success': true },
