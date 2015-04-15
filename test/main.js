@@ -1,5 +1,5 @@
 /**
- * confirge | test/test.js
+ * confirge | test/main.js
  * file version: 0.00.001
  */
 'use strict';

@@ -7,19 +7,15 @@
 var Gulp        = require('gulp'),
     GulpJsHint  = require('gulp-jshint'),
     GulpMocha   = require('gulp-mocha'),
-    GulpPlumber = require('gulp-plumber'),
     RunSequence = require('run-sequence');
 
-//------------------------------------------------------------------------------
-
-var JS_SRC = [__filename, './*.js', 'test/*.js'];
+var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
 
 ////////////////////////////////////////////////////////////////////////////////
 
 Gulp.task('lint', function()
 {
     return Gulp.src(JS_SRC)
-        .pipe( GulpPlumber() )
         .pipe( GulpJsHint() )
         .pipe( GulpJsHint.reporter('jshint-stylish') );
 });
@@ -27,7 +23,6 @@ Gulp.task('lint', function()
 Gulp.task('test', function()
 {
     return Gulp.src('test/*.js', { 'read': false })
-        .pipe( GulpPlumber() )
         .pipe( GulpMocha() );
 });
 
