@@ -24,7 +24,7 @@ config = confirge('config.yml');
 // load from a file, returned by a function
 config = confirge(function()
 {
-    return 'config.json'
+    return 'config.json';
 });
 
 // extend objects
@@ -34,6 +34,7 @@ config = confirge.extend(config,
 });
 
 // will replace vars inside the config obj, eg. %var1%, %var2%
+// this will result in { 'example': 'value1 and value2' }
 config = confirge.replace(config,
 {
     'var1': 'value1',
