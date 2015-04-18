@@ -90,6 +90,16 @@ describe('Confirge.read()', function()
         Assert.deepEqual($actual, EXPECTED_JSON);
     });
 
+    it('should read the json file from the function, and return an object', function()
+    {
+        var $input = function()
+        {
+            return getFixtureFile('success.json');
+        };
+
+        Assert.deepEqual(Confirge.read($input), EXPECTED_JSON);
+    });
+
     it('should fail reading the yaml file', function()
     {
         var $actual = Confirge.read( getFixtureFile('failure.yml') );
@@ -138,11 +148,17 @@ describe('Confirge.replace()', function()
         });
     });
 
-    it('should return the same object', function()
+    it('should return the same object [1]', function()
     {
         var $input = { 'str': 'do %not% replace %anything%!' };
         Assert.deepEqual(Confirge.replace($input, INPUT_VARS), $input);
     });
+
+    it('should return the same object [2]', function()
+    {
+        var $input = ['test', '123', function(){ return false }];
+        Assert.deepEqual(Confirge.replace($input, INPUT_VARS), $input);
+    })
 });
 
 //------------------------------------------------------------------------------
