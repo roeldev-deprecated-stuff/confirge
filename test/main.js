@@ -156,9 +156,9 @@ describe('Confirge.replace()', function()
 
     it('should return the same object [2]', function()
     {
-        var $input = ['test', '123', function(){ return false }];
+        var $input = ['test', '123', function(){ return false; }];
         Assert.deepEqual(Confirge.replace($input, INPUT_VARS), $input);
-    })
+    });
 });
 
 //------------------------------------------------------------------------------
