@@ -1,6 +1,6 @@
 /**
  * confirge | gulpfile.js
- * file version: 0.00.001
+ * file version: 0.00.002
  */
 'use strict';
 
@@ -23,7 +23,7 @@ Gulp.task('lint', function()
 Gulp.task('test', function()
 {
     return Gulp.src('test/*.js', { 'read': false })
-        .pipe( GulpMocha() );
+        .pipe( GulpMocha({ 'reporter': 'list' }) );
 });
 
 Gulp.task('dev', function()
@@ -39,4 +39,9 @@ Gulp.task('dev', function()
 Gulp.task('watch', function()
 {
     Gulp.watch(JS_SRC, ['dev']);
+});
+
+Gulp.task('watch:lint', function()
+{
+    Gulp.watch(JS_SRC, ['lint']);
 });
