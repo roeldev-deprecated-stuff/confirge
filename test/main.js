@@ -1,6 +1,6 @@
 /**
  * confirge | test/main.js
- * file version: 0.00.003
+ * file version: 0.00.004
  */
 'use strict';
 
@@ -335,6 +335,26 @@ describe('Utils.prepareVars()', function()
         });
     });
 
+    it('should flatten and return an object with regexp and prepared replace values', function()
+    {
+        var $input =
+        {
+            'var1': 'value1',
+            'var2':
+            {
+                'a': 'value2a',
+                'b': 'value2b'
+            }
+        };
+
+        Assert.deepEqual(Utils.prepareVars($input),
+        {
+            'var1':   { 'regexp': new RegExp('%var1%', 'g'), 'replace': 'value1' },
+            'var2.a': { 'regexp': new RegExp('%var2.a%', 'g'), 'replace': 'value2a' },
+            'var2.b': { 'regexp': new RegExp('%var2.b%', 'g'), 'replace': 'value2b' }
+        });
+    });
+
     it('should return false [1]', function()
     {
         Assert.equal(Utils.prepareVars([]), false);
@@ -425,14 +445,14 @@ describe('Utils.replaceVars()', function()
     });
 });
 
-describe('Utils.handleItem()', function()
+describe('Utils.replaceHandleItem()', function()
 {
     it('should replace the var and return a string', function()
     {
         var $input = 'the value is %var1%',
             $vars  = Utils.prepareVars(INPUT_VARS);
 
-        Assert.equal(Utils.handleItem($input, $vars), 'the value is value1');
+        Assert.equal(Utils.replaceHandleItem($input, $vars), 'the value is value1');
     });
 
     it('should handle the array', function()
@@ -440,7 +460,7 @@ describe('Utils.handleItem()', function()
         var $input = ['test 1 = %var1%', 'test 2 = %var2%'],
             $vars  = Utils.prepareVars(INPUT_VARS);
 
-        Assert.deepEqual(Utils.handleItem($input, $vars),
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
         [
             'test 1 = value1',
             'test 2 = %var2%'
@@ -457,7 +477,7 @@ describe('Utils.handleItem()', function()
 
         $vars = Utils.prepareVars(INPUT_VARS);
 
-        Assert.deepEqual(Utils.handleItem($input, $vars),
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
         {
             'test1': 'test 1 = value1',
             'test2': 'test 2 = %var2%'
@@ -467,30 +487,30 @@ describe('Utils.handleItem()', function()
     it('should return the exact input value [1]', function()
     {
         var $input = true;
-        Assert.equal(Utils.handleItem($input, {}), $input);
+        Assert.equal(Utils.replaceHandleItem($input, {}), $input);
     });
 
     it('should return the exact input value [2]', function()
     {
         var $input = function() {};
-        Assert.equal(Utils.handleItem($input, {}), $input);
+        Assert.equal(Utils.replaceHandleItem($input, {}), $input);
     });
 
     it('should return the exact input value [3]', function()
     {
         var $input = 123;
-        Assert.equal(Utils.handleItem($input, {}), $input);
+        Assert.equal(Utils.replaceHandleItem($input, {}), $input);
     });
 });
 
-describe('Utils.handleArray()', function()
+describe('Utils.replaceHandleArray()', function()
 {
     it('should handle the array', function()
     {
         var $input = ['test 1 = %var1%', 'test 2 = %var2%'],
             $vars  = Utils.prepareVars(INPUT_VARS);
 
-        Assert.deepEqual(Utils.handleItem($input, $vars),
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
         [
             'test 1 = value1',
             'test 2 = %var2%'
@@ -498,7 +518,7 @@ describe('Utils.handleArray()', function()
     });
 });
 
-describe('Utils.handleObject()', function()
+describe('Utils.replaceHandleObject()', function()
 {
     it('should handle the object', function()
     {
@@ -510,7 +530,7 @@ describe('Utils.handleObject()', function()
 
         $vars = Utils.prepareVars(INPUT_VARS);
 
-        Assert.deepEqual(Utils.handleItem($input, $vars),
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
         {
             'test1': 'test 1 = value1',
             'test2': 'test 2 = %var2%'
@@ -531,7 +551,7 @@ describe('Utils.handleObject()', function()
 
         $vars = Utils.prepareVars(INPUT_VARS);
 
-        Assert.deepEqual(Utils.handleItem($input, $vars),
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
         {
             'test1': 'test 1 = value1',
             'test2': 'test 2 = %var2%'
