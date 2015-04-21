@@ -4,10 +4,15 @@
  */
 'use strict';
 
-var Gulp        = require('gulp'),
-    GulpJsHint  = require('gulp-jshint'),
-    GulpMocha   = require('gulp-mocha'),
-    RunSequence = require('run-sequence');
+var Gulp            = require('gulp');
+var GulpJsHint      = require('gulp-jshint');
+var GulpJsCs        = require('gulp-jscs');
+var GulpJsCsStylish = require('gulp-jscs-stylish');
+var GulpMocha       = require('gulp-mocha');
+var RunSequence     = require('run-sequence');
+var Utils           = require('./lib/utils.js');
+
+//------------------------------------------------------------------------------
 
 var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
 
@@ -17,23 +22,21 @@ Gulp.task('lint', function()
 {
     return Gulp.src(JS_SRC)
         .pipe( GulpJsHint() )
+        .pipe( GulpJsCs() ).on('error', Utils.noop)
+        .pipe( GulpJsCsStylish.combineWithHintResults() )
         .pipe( GulpJsHint.reporter('jshint-stylish') );
 });
 
 Gulp.task('test', function()
 {
     return Gulp.src('test/*.js', { 'read': false })
-        .pipe( GulpMocha({ 'reporter': 'list' }) );
+        .pipe( GulpMocha({ 'reporter': 'spec' }) );
 });
 
 Gulp.task('dev', function()
 {
-    for(var $i = 0; $i < 30; $i++)
-    {
-        console.log('');
-    }
-
-    RunSequence('lint', 'test');
+    process.stdout.write('\u001b[2J');
+    RunSequence('test', 'lint');
 });
 
 Gulp.task('watch', function()
