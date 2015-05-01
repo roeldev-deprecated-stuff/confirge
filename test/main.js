@@ -1,6 +1,6 @@
 /**
  * confirge | test/main.js
- * file version: 0.00.006
+ * file version: 0.00.007
  */
 'use strict';
 
@@ -114,21 +114,41 @@ describe('Confirge.read()', function()
     {
         var $actual = Confirge.read( getFixtureFile('failure.yml') );
 
-        Assert.equal($actual, false);
+        Assert.strictEqual($actual, false);
     });
 
     it('should fail reading the json file', function()
     {
         var $actual = Confirge.read( getFixtureFile('failure.json') );
 
-        Assert.equal($actual, false);
+        Assert.strictEqual($actual, false);
     });
 
     it('should fail reading the unexisting file', function()
     {
         var $actual = Confirge.read( getFixtureFile('does-not.exists') );
 
-        Assert.equal($actual, false);
+        Assert.strictEqual($actual, false);
+    });
+
+    it('should fail reading an undefined path', function()
+    {
+        Assert.strictEqual(Confirge.read(undefined), false);
+    });
+
+    it('should fail when passing an invald path [1]', function()
+    {
+        Assert.strictEqual(Confirge.read(true), false);
+    });
+
+    it('should fail when passing an invald path [2]', function()
+    {
+        var $input = function()
+        {
+            return {};
+        };
+
+        Assert.strictEqual(Confirge.read($input), false);
     });
 });
 
