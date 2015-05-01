@@ -15,11 +15,10 @@ npm install --save confirge
 
 ## How to use
 ```js
-var confirge = require('confirge'),
-    config;
+var confirge = require('confirge');
 
 // basic usage, load from a file
-config = confirge('config.yml');
+var config = confirge('config.yml');
 
 // load from a file, returned by a function
 config = confirge(function()
@@ -65,7 +64,7 @@ When a function is passed, it is assumed this function returns the path to a fil
 
 
 ### confirge.replace(source, vars)
-Loops through all source values and replaces any used variables wich are defined in the vars object.
+Loops through all (nested) source values and replaces any found variables.
 
 #### `source`
 > Type: `object` or `array`
@@ -92,7 +91,7 @@ Extend a base object with the given sources. These sources are handled by the ma
 [david-img]: https://david-dm.org/roeldev/confirge.svg
 [david-url]: https://david-dm.org/roeldev/confirge
 
-[api-confirge]: #confirge2
-[api-confirge-read]: #1
-[api-confirge-replace]: #2
-[api-confirge-extend]: #3
+[api-confirge]: #confirgesource
+[api-confirge-read]: #confirgereadfile
+[api-confirge-replace]: #confirgereplacesource-vars
+[api-confirge-extend]: #confirgeextendsource
