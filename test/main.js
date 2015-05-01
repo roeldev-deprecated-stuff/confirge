@@ -1,6 +1,6 @@
 /**
  * confirge | test/main.js
- * file version: 0.00.005
+ * file version: 0.00.006
  */
 'use strict';
 
@@ -26,23 +26,29 @@ var EXPECTED_VARS =
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function getFixtureFile($file)
+function getFixtureFile($file, $relative)
 {
-    return Path.resolve(__dirname, './fixtures/' + $file);
+    $file = Path.resolve(__dirname, './fixtures/' + $file);
+    if ($relative === true)
+    {
+        $file = Path.relative(process.cwd(), $file);
+    }
+
+    return $file;
 }
 
 //------------------------------------------------------------------------------
 
 describe('Confirge()', function()
 {
-    it('should return the same object', function()
+    it('should return the exact same object', function()
     {
-        Assert.equal(Confirge(OBJ_PLAIN), OBJ_PLAIN);
+        Assert.strictEqual(Confirge(OBJ_PLAIN), OBJ_PLAIN);
     });
 
-    it('should read the file and return an object', function()
+    it('should read the relative file path and return an object', function()
     {
-        var $actual = Confirge(getFixtureFile('success.json'));
+        var $actual = Confirge( getFixtureFile('success.json', true) );
 
         Assert.deepEqual($actual, EXPECTED_JSON);
     });
@@ -61,7 +67,7 @@ describe('Confirge()', function()
     {
         var $actual = Confirge(function()
         {
-            return Confirge.read(getFixtureFile('success.yml'));
+            return Confirge.read( getFixtureFile('success.yml') );
         });
 
         Assert.deepEqual($actual, EXPECTED_YAML);
@@ -158,14 +164,14 @@ describe('Confirge.replace()', function()
         });
     });
 
-    it('should return the same object [1]', function()
+    it('should return the exact same object [1]', function()
     {
         var $input = { 'str': 'do %not% replace %anything%!' };
 
-        Assert.deepEqual(Confirge.replace($input, INPUT_VARS), $input);
+        Assert.strictEqual(Confirge.replace($input, INPUT_VARS), $input);
     });
 
-    it('should return the same object [2]', function()
+    it('should return the exact same object [2]', function()
     {
         var $input =
         [
@@ -178,7 +184,7 @@ describe('Confirge.replace()', function()
             }
         ];
 
-        Assert.deepEqual(Confirge.replace($input, INPUT_VARS), $input);
+        Assert.strictEqual(Confirge.replace($input, INPUT_VARS), $input);
     });
 
     it('should replace the vars deep inside the object', function()
@@ -262,14 +268,14 @@ describe('Confirge.extend()', function()
         });
     });
 
-    it('should return the same object [1]', function()
+    it('should return the exact same object [1]', function()
     {
-        Assert.deepEqual(Confirge.extend(OBJ_PLAIN), OBJ_PLAIN);
+        Assert.strictEqual(Confirge.extend(OBJ_PLAIN), OBJ_PLAIN);
     });
 
-    it('should return the same object [2]', function()
+    it('should return the exact same object [2]', function()
     {
-        Assert.deepEqual(Confirge.extend(OBJ_PLAIN, false), OBJ_PLAIN);
+        Assert.strictEqual(Confirge.extend(OBJ_PLAIN, false), OBJ_PLAIN);
     });
 });
 
@@ -277,7 +283,7 @@ describe('Confirge.extend()', function()
 
 describe('Utils.noop()', function()
 {
-    it('is only here to get 100% code coverage', function()
+    it('is only here to get 100% code coverage :P', function()
     {
         Assert.equal(Utils.noop(), null);
     });
@@ -315,17 +321,17 @@ describe('Utils.findReplacements()', function()
 
     it('no replacements found [1]', function()
     {
-        Assert.equal(Utils.findReplacements('%test %test'), false);
+        Assert.strictEqual(Utils.findReplacements('%test %test'), false);
     });
 
     it('no replacements found [2]', function()
     {
-        Assert.equal(Utils.findReplacements('test% test%'), false);
+        Assert.strictEqual(Utils.findReplacements('test% test%'), false);
     });
 
     it('no replacements found [3]', function()
     {
-        Assert.equal(Utils.findReplacements('% test % test'), false);
+        Assert.strictEqual(Utils.findReplacements('% test % test'), false);
     });
 });
 
@@ -488,12 +494,12 @@ describe('Utils.prepareHandleVars()', function()
 
     it('should return false [1]', function()
     {
-        Assert.equal(Utils.prepareHandleVars([]), false);
+        Assert.strictEqual(Utils.prepareHandleVars([]), false);
     });
 
     it('should return false [2]', function()
     {
-        Assert.equal(Utils.prepareHandleVars(''), false);
+        Assert.strictEqual(Utils.prepareHandleVars(''), false);
     });
 });
 
@@ -556,7 +562,7 @@ describe('Utils.replaceVars()', function()
         var $vars   = Utils.prepareHandleVars(INPUT_VARS);
         var $actual = Utils.replaceVars($input, $vars);
 
-        Assert.equal($actual, $input);
+        Assert.strictEqual($actual, $input);
     });
 
     it('should return the exact string [2]', function()
@@ -564,7 +570,7 @@ describe('Utils.replaceVars()', function()
         var $input  = 'the value is %var2%';
         var $actual = Utils.replaceVars($input, false);
 
-        Assert.equal($actual, $input);
+        Assert.strictEqual($actual, $input);
     });
 
     it('should return the exact string [3]', function()
@@ -572,7 +578,7 @@ describe('Utils.replaceVars()', function()
         var $input  = 'the value is %var2%';
         var $actual = Utils.replaceVars($input, {});
 
-        Assert.equal($actual, $input);
+        Assert.strictEqual($actual, $input);
     });
 });
 
@@ -619,21 +625,21 @@ describe('Utils.replaceHandleItem()', function()
     {
         var $input = true;
 
-        Assert.equal(Utils.replaceHandleItem($input, {}), $input);
+        Assert.strictEqual(Utils.replaceHandleItem($input, {}), $input);
     });
 
     it('should return the exact input value [2]', function()
     {
         var $input = Utils.noop;
 
-        Assert.equal(Utils.replaceHandleItem($input, {}), $input);
+        Assert.strictEqual(Utils.replaceHandleItem($input, {}), $input);
     });
 
     it('should return the exact input value [3]', function()
     {
         var $input = 123;
 
-        Assert.equal(Utils.replaceHandleItem($input, {}), $input);
+        Assert.strictEqual(Utils.replaceHandleItem($input, {}), $input);
     });
 });
 
