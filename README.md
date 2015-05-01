@@ -1,4 +1,4 @@
-# Confirge
+# confirge
 
   [![NPM Version][npm-img]][npm-url]
   [![Linux Build][travis-img]][travis-url]
@@ -15,11 +15,10 @@ npm install --save confirge
 
 ## How to use
 ```js
-var confirge = require('confirge'),
-    config;
+var confirge = require('confirge');
 
 // basic usage, load from a file
-config = confirge('config.yml');
+var config = confirge('config.yml');
 
 // load from a file, returned by a function
 config = confirge(function()
@@ -42,6 +41,45 @@ config = confirge.replace(config,
 });
 ```
 
+## API
+- [confirge()][api-confirge]
+- [confirge.read()][api-confirge-read]
+- [confirge.replace()][api-confirge-replace]
+- [confirge.extend()][api-confirge-extend]
+
+
+### confirge(source)
+Handles a string (file path), function, or object source and returns an object.
+
+#### `source`
+> Type: `string`, `function` or `object`
+
+
+### confirge.read(file)
+Read file and return object. Returns `false` on failure.
+When a function is passed, it is assumed this function returns the path to a file wich should be read.
+
+#### `file`
+> Type: `string` or `function`
+
+
+### confirge.replace(source, vars)
+Loops through all (nested) source values and replaces any found variables.
+
+#### `source`
+> Type: `object` or `array`
+
+#### `vars`
+> Type: `object`
+
+
+### confirge.extend(source...)
+Extend a base object with the given sources. These sources are handled by the main `confirge` function and are only used if objects are returned.
+
+#### `source`
+> Type: `string`, `function` or `object`
+
+
 [npm-img]: https://badge.fury.io/js/confirge.svg
 [npm-url]: https://www.npmjs.com/package/confirge
 [travis-img]: https://img.shields.io/travis/roeldev/confirge/master.svg?label=linux
@@ -52,3 +90,8 @@ config = confirge.replace(config,
 [coveralls-url]: https://coveralls.io/r/roeldev/confirge?branch=master
 [david-img]: https://david-dm.org/roeldev/confirge.svg
 [david-url]: https://david-dm.org/roeldev/confirge
+
+[api-confirge]: #confirgesource
+[api-confirge-read]: #confirgereadfile
+[api-confirge-replace]: #confirgereplacesource-vars
+[api-confirge-extend]: #confirgeextendsource
