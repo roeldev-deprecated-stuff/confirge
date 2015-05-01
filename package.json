@@ -1,7 +1,7 @@
 {
   "title": "confirge",
   "name": "confirge",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "homepage": "https://github.com/roeldev/confirge",
   "description": "Flexible configuration!",
   "license": "GPL-2.0+",
@@ -11,7 +11,7 @@
     "url": "https://github.com/roeldev/confirge.git"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=0.12"
   },
   "scripts": {
     "setup": "npm install",
