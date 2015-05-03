@@ -1,7 +1,7 @@
 {
   "title": "confirge",
   "name": "confirge",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/roeldev/confirge",
   "description": "Flexible configuration!",
   "license": "GPL-2.0+",
@@ -20,7 +20,7 @@
     "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks"
   },
   "dependencies": {
-    "deep-extend": "^0.3.3",
+    "deep-extend": "^0.4.0",
     "graceful-fs": "^3.0.6",
     "js-yaml": "^3.2.7",
     "underscore": "^1.8.3"
@@ -43,6 +43,9 @@
   },
   "keywords": [
     "config",
+    "configuration",
+    "flexible",
+    "easy",
     "json",
     "yaml",
     "variable",
