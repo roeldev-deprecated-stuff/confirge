@@ -72,7 +72,7 @@ Handles a string (file path), function, or object source and returns an object.
 </table>
 When passing a string, it is assumed it is the path to a file. When not absolute, the path will be used relative from `process.cwd()`.
 A function will be executed and it's result will be used. This result can be one of the accepted values, `string`, `function` or `object`.
-Objects are just returned the same as it came in.
+Objects are just returned the same as they came in.
 
 
 ### confirge.read(file)

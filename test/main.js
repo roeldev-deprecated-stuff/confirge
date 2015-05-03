@@ -39,7 +39,7 @@ function getFixtureFile($file, $relative)
 
 //------------------------------------------------------------------------------
 
-describe('Confirge()', function()
+describe('Confirge()', function confirgeTests()
 {
     it('should return the exact same object', function()
     {
@@ -84,7 +84,7 @@ describe('Confirge()', function()
     });
 });
 
-describe('Confirge.read()', function()
+describe('Confirge.read()', function confirgeReadTests()
 {
     it('should read the yaml file and return an object', function()
     {
@@ -152,7 +152,7 @@ describe('Confirge.read()', function()
     });
 });
 
-describe('Confirge.replace()', function()
+describe('Confirge.replace()', function confirgeReplaceTests()
 {
     it('should replace a string var', function()
     {
@@ -255,7 +255,7 @@ describe('Confirge.replace()', function()
     });
 });
 
-describe('Confirge.extend()', function()
+describe('Confirge.extend()', function confirgeExtendTests()
 {
     // remove prototype added by Utils.replaceHandleObject() testcase
     // otherwise, it will cause this test to fail
@@ -301,7 +301,7 @@ describe('Confirge.extend()', function()
 
 //------------------------------------------------------------------------------
 
-describe('Utils.noop()', function()
+describe('Utils.noop()', function utilsNoopTests()
 {
     it('is only here to get 100% code coverage :P', function()
     {
@@ -309,7 +309,7 @@ describe('Utils.noop()', function()
     });
 });
 
-describe('Utils.findReplacements()', function()
+describe('Utils.findReplacements()', function utilsFindReplacementsTests()
 {
     it('found replacement [1]', function()
     {
@@ -355,7 +355,7 @@ describe('Utils.findReplacements()', function()
     });
 });
 
-describe('Utils.prepareVar()', function()
+describe('Utils.prepareVar()', function utilsPrepareVarTests()
 {
     it('should return an object with regexp and replace value', function()
     {
@@ -405,7 +405,7 @@ describe('Utils.prepareVar()', function()
     });
 });
 
-describe('Utils.prepareVars()', function()
+describe('Utils.prepareVars()', function utilsPrepareVarsTests()
 {
     it('it should flatten a multilevel vars object', function()
     {
@@ -428,7 +428,7 @@ describe('Utils.prepareVars()', function()
     });
 });
 
-describe('Utils.prepareHandleVars()', function()
+describe('Utils.prepareHandleVars()', function utilsPrepareHandleVarsTests()
 {
     it('should return an object with regexp and replace value [1]', function()
     {
@@ -523,7 +523,7 @@ describe('Utils.prepareHandleVars()', function()
     });
 });
 
-describe('Utils.replaceVars()', function()
+describe('Utils.replaceVars()', function utilsReplaceVarsTests()
 {
     it('should replace the var [1]', function()
     {
@@ -602,7 +602,7 @@ describe('Utils.replaceVars()', function()
     });
 });
 
-describe('Utils.replaceHandleItem()', function()
+describe('Utils.replaceHandleItem()', function utilsReplaceHandleItemTests()
 {
     it('should replace the var and return a string', function()
     {
@@ -663,7 +663,7 @@ describe('Utils.replaceHandleItem()', function()
     });
 });
 
-describe('Utils.replaceHandleArray()', function()
+describe('Utils.replaceHandleArray()', function utilsReplaceHandleArrayTests()
 {
     it('should handle the array', function()
     {
@@ -678,7 +678,7 @@ describe('Utils.replaceHandleArray()', function()
     });
 });
 
-describe('Utils.replaceHandleObject()', function()
+describe('Utils.replaceHandleObject()', function utilsReplaceHandleObjectTests()
 {
     it('should handle the object', function()
     {
@@ -713,6 +713,51 @@ describe('Utils.replaceHandleObject()', function()
         {
             'test1': 'test 1 = value1',
             'test2': 'test 2 = %var2%'
+        });
+    });
+});
+
+describe('readme examples', function readmeExamples()
+{
+    it('should succeed the `How to use` example', function()
+    {
+        // extend objects
+        var $config = Confirge.extend({},
+        {
+            'example': '%var1% and %var2%'
+        });
+
+        // will replace vars inside the config obj, eg. %var1%, %var2%
+        // this will result in { 'example': 'value1 and value2' }
+        $config = Confirge.replace($config,
+        {
+            'var1': 'value1',
+            'var2': 'value2'
+        });
+
+        Assert.deepEqual($config, { 'example': 'value1 and value2' });
+    });
+
+    it('should succeed the `confirge.replace API` example', function()
+    {
+        var $source =
+        {
+            'config-option':   '%some-var%',
+            'other-option':    true,
+            'supported-types': ['object', '%types.a%']
+        };
+
+        var $vars =
+        {
+            'some-var': 'some-value',    // %some-var%
+            'types':    { 'a': 'array' } // %types.a%
+        };
+
+        Assert.deepEqual(Confirge.replace($source, $vars),
+        {
+            'config-option':   'some-value',
+            'other-option':    true,
+            'supported-types': ['object', 'array']
         });
     });
 });
