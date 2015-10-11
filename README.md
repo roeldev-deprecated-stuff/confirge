@@ -19,8 +19,7 @@
 
 **Flexible configuration!**
 
-Confirge aims to make configuration of modules easy and flexible. It supports different ways of creating config objects or reading config files. To make things even more flexible you can make use of a simple 'variable template system' to replace often used strings (eg. directories/names) in your config objects.
-
+Confirge aims to make configuration of modules easy and flexible. It supports different ways of creating config `object`s or reading config files. To make things even more flexible you can make use of a simple 'variable template system' to replace often used `string`s (eg. directories/names) in your config `object`s.
 
 
 ## Installation
@@ -42,15 +41,13 @@ config = confirge(function()
 });
 
 // extend objects
-config = confirge.extend(config,
-{
+config = confirge.extend(config, {
     'example': '%var1% and %var2%'
 });
 
 // will replace vars inside the config obj, eg. %var1%, %var2%
 // this will result in { 'example': 'value1 and value2' }
-config = confirge.replace(config,
-{
+config = confirge.replace(config, {
     'var1': 'value1',
     'var2': 'value2'
 });
@@ -62,79 +59,73 @@ config = confirge.replace(config,
 - [confirge.replace()][api-confirge-replace]
 - [confirge.extend()][api-confirge-extend]
 
-
+--------------------------------------------------------------------------------
 ### confirge(source)
 Handles a string (file path), function, or object source and returns an object.
 
-- <h4>source</h4>
-<table>
-<tr><td>Type</td><td><code>string</code>, <code>function</code> or <code>object</code></td></tr>
-</table>
-When passing a string, it is assumed it is the path to a file. When not absolute, the path will be used relative from `process.cwd()`.
-A function will be executed and it's result will be used. This result can be one of the accepted values, `string`, `function` or `object`.
-Objects are just returned the same as they came in.
+argument | type | description
+---------|------|------------
+_source_ | `string`, `function` or `object` | The source to read from.
+
+When passing a `string`, it is assumed it is the path to a file. When not absolute, the path will be used relative from `process.cwd()`. A `function` will be executed and it's result will be used. This result can be one of the accepted values, `string`, `function` or `object`. `Object`s are just returned the same as they came in.
 
 
+--------------------------------------------------------------------------------
 ### confirge.read(file)
-Read file and return object. Returns `false` on failure.
+Reads a file and returns an `object`. Returns `false` on failure.
 When a function is passed, it is assumed it returns the path to a file wich should be read.
 
-- <h4>file</h4>
-<table>
-<tr><td>Type</td><td><code>string</code> or <code>function</code></td></tr>
-</table>
-When passing a string, it is assumed it is the path to a file. When not absolute, the path will be used relative from `process.cwd()`.
-A function will be executed and it's result will be used. This result can be one of the accepted values, `string` or `function`.
+argument | type | description
+---------|------|------------
+_file_ | `string` or `function` | The source to read from.
+
+When passing a `string`, it is assumed it is the path to a file. When not absolute, the path will be used relative from `process.cwd()`. A `function` will be executed and it's result will be used. This result can be one of the accepted values, `string` or `function`.
 
 
+--------------------------------------------------------------------------------
 ### confirge.replace(source, vars)
 Loops through all (nested) source values and replaces any found variables.
 
-- <h4>source</h4>
-<table>
-<tr><td>Type</td><td><code>object</code> or <code>array</code></td></tr>
-</table>
-The function will loop through the values of the object or array and replace any found vars (eg. `%dir%`) for their values. Multilevel objects and arrays are supported.
+argument | type | description
+---------|------|------------
+_source_ | `object` or `array` | The function will loop through the values and replace any found vars (eg. `%dir%`) for their values. Multilevel `objects` and `arrays` are supported.
+_vars_ | `object` | An `object` with variables. Multilevel `object`s are supported.
 
-- <h4>vars</h4>
-<table>
-<tr><td>Type</td><td><code>object</code></td></tr>
-</table>
-An object with variables wich should be used on the source object or array. Multilevel objects are supported, variables can be used with dot notation.
 
 ```js
-var source =
-{
+var source = {
     'config-option':   '%some-var%',
+    'config-option2':  '%another.var%',
     'other-option':    true,
     'supported-types': ['object', '%types.a%']
 };
 
-var vars =
-{
-    'some-var': 'some-value',    // %some-var%
-    'types':    { 'a': 'array' } // %types.a%
+var vars = {
+    'some-var':    'some-value',    // %some-var%
+    'another.var': 'another value', // %another.var%
+    'types':       { 'a': 'array' } // %types.a%
 };
 
 var result = confirge.replace(source, vars);
 
 // the result will be:
-result =
-{
+result = {
     'config-option':   'some-value',
+    'config-option2':  'another value',
     'other-option':    true,
     'supported-types': ['object', 'array']
 };
 ```
 
 
+--------------------------------------------------------------------------------
 ### confirge.extend(source...)
-Extend a base object with the given sources. These sources are handled by the main `confirge` function and are only used if objects are returned.
+Extend a base `object` with the given sources. These sources are handled by the main `confirge` function and are only used if `object`s are returned.
 
-- <h4>source</h4>
-<table>
-<tr><td>Type</td><td><code>string</code>, <code>function</code> or <code>object</code></td></tr>
-</table>
+argument | type | description
+---------|------|------------
+_source_ | `string`, `function` or `object` | A base `object`.
+_..._ | `string`, `function` or `object` | A source to extend the base `object` with.
 
 
 [api-confirge]: #confirgesource

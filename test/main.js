@@ -15,10 +15,8 @@ var OBJ_PLAIN     = { 'title': 'test obj', 'success': true };
 var EXPECTED_YAML = { 'title': 'test yaml', 'success': true };
 var EXPECTED_JSON = { 'title': 'test json', 'success': true };
 var INPUT_VARS    = { 'var1': 'value1' };
-var EXPECTED_VARS =
-{
-    'var1':
-    {
+var EXPECTED_VARS = {
+    'var1': {
         'regexp':  new RegExp('%var1%', 'g'),
         'replace': 'value1'
     }
@@ -158,8 +156,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
     {
         var $input = { 'str': '%var1%' };
 
-        Assert.deepEqual(Confirge.replace($input, INPUT_VARS),
-        {
+        Assert.deepEqual(Confirge.replace($input, INPUT_VARS), {
             'str': 'value1'
         });
     });
@@ -168,8 +165,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
     {
         var $input = { 'str': '%var1% is equal to %var1%' };
 
-        Assert.deepEqual(Confirge.replace($input, INPUT_VARS),
-        {
+        Assert.deepEqual(Confirge.replace($input, INPUT_VARS), {
             'str': 'value1 is equal to value1'
         });
     });
@@ -178,8 +174,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
     {
         var $input = { 'str': '%var1% is not equal to %var2%' };
 
-        Assert.deepEqual(Confirge.replace($input, INPUT_VARS),
-        {
+        Assert.deepEqual(Confirge.replace($input, INPUT_VARS), {
             'str': 'value1 is not equal to %var2%'
         });
     });
@@ -193,8 +188,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
 
     it('should return the exact same object [2]', function()
     {
-        var $input =
-        [
+        var $input = [
             'test',
             '123',
 
@@ -209,46 +203,31 @@ describe('Confirge.replace()', function confirgeReplaceTests()
 
     it('should replace the vars deep inside the object', function()
     {
-        var $input =
-        {
-            'key1':
-            {
+        var $input = {
+            'key1': {
                 'key1-2': 'replace me! %var1%'
             },
 
-            'key2':
-            {
-                'key2-2':
-                [
+            'key2': {
+                'key2-2': [
                     'replace me too! %var1%',
                     'skip me! %var2%',
-
-                    [
-                        'down the rabbit hole',
-                        'last %var1% replacement'
-                    ]
+                    [ 'down the rabbit hole', 'last %var1% replacement' ]
                 ]
             }
         };
 
         Assert.deepEqual(Confirge.replace($input, INPUT_VARS),
         {
-            'key1':
-            {
+            'key1': {
                 'key1-2': 'replace me! value1'
             },
 
-            'key2':
-            {
-                'key2-2':
-                [
+            'key2': {
+                'key2-2': [
                     'replace me too! value1',
                     'skip me! %var2%',
-
-                    [
-                        'down the rabbit hole',
-                        'last value1 replacement'
-                    ]
+                    [ 'down the rabbit hole', 'last value1 replacement' ]
                 ]
             }
         });
@@ -265,8 +244,7 @@ describe('Confirge.extend()', function confirgeExtendTests()
     {
         var $actual = Confirge.extend(OBJ_PLAIN, INPUT_VARS);
 
-        Assert.deepEqual($actual,
-        {
+        Assert.deepEqual($actual, {
             'title':   'test obj',
             'success': true,
             'var1':    'value1'
@@ -280,8 +258,7 @@ describe('Confirge.extend()', function confirgeExtendTests()
             return INPUT_VARS;
         });
 
-        Assert.deepEqual($actual,
-        {
+        Assert.deepEqual($actual, {
             'title':   'test obj',
             'success': true,
             'var1':    'value1'
@@ -366,22 +343,18 @@ describe('Utils.prepareVar()', function utilsPrepareVarTests()
 
     it('should replace the replacement var', function()
     {
-        var $input =
-        {
+        var $input = {
             'var1': 'value1 %var2%',
             'var2': 'value2'
         };
 
-        Assert.deepEqual(Utils.prepareVar({}, $input, 'var1'),
-        {
-            'var1':
-            {
+        Assert.deepEqual(Utils.prepareVar({}, $input, 'var1'), {
+            'var1': {
                 'regexp':  new RegExp('%var1%', 'g'),
                 'replace': 'value1 value2'
             },
 
-            'var2':
-            {
+            'var2': {
                 'regexp':  new RegExp('%var2%', 'g'),
                 'replace': 'value2'
             }
@@ -392,10 +365,8 @@ describe('Utils.prepareVar()', function utilsPrepareVarTests()
     {
         var $input = { 'var1': 'value1 %var2%' };
 
-        Assert.deepEqual(Utils.prepareVar({}, $input, 'var1'),
-        {
-            'var1':
-            {
+        Assert.deepEqual(Utils.prepareVar({}, $input, 'var1'), {
+            'var1': {
                 'regexp':  new RegExp('%var1%', 'g'),
                 'replace': 'value1 %var2%'
             },
@@ -409,18 +380,15 @@ describe('Utils.prepareVars()', function utilsPrepareVarsTests()
 {
     it('it should flatten a multilevel vars object', function()
     {
-        var $input =
-        {
-            'level1':
-            {
+        var $input = {
+            'level1': {
                 'level2': INPUT_VARS
             }
         };
 
         Assert.deepEqual(Utils.prepareVars({}, $input),
         {
-            'level1.level2.var1':
-            {
+            'level1.level2.var1': {
                 'regexp':  new RegExp('%level1.level2.var1%', 'g'),
                 'replace': 'value1'
             }
@@ -449,8 +417,7 @@ describe('Utils.prepareHandleVars()', function utilsPrepareHandleVarsTests()
 
     it('should return an object with prepared vars', function()
     {
-        var $input =
-        {
+        var $input = {
             'var1': 'value1 %var3%',
             'var2': 'value2',
             'var3': 'value3 %var2%'
@@ -458,20 +425,17 @@ describe('Utils.prepareHandleVars()', function utilsPrepareHandleVarsTests()
 
         Assert.deepEqual(Utils.prepareHandleVars($input),
         {
-            'var2':
-            {
+            'var2': {
                 'regexp':  new RegExp('%var2%', 'g'),
                 'replace': 'value2'
             },
 
-            'var3':
-            {
+            'var3': {
                 'regexp':  new RegExp('%var3%', 'g'),
                 'replace': 'value3 value2'
             },
 
-            'var1':
-            {
+            'var1': {
                 'regexp':  new RegExp('%var1%', 'g'),
                 'replace': 'value1 value3 value2'
             }
@@ -480,11 +444,9 @@ describe('Utils.prepareHandleVars()', function utilsPrepareHandleVarsTests()
 
     it('should flatten and return an object with prepared vars', function()
     {
-        var $input =
-        {
+        var $input = {
             'var1': 'value1',
-            'var2':
-            {
+            'var2': {
                 'a': 'value2a',
                 'b': 'value2b'
             }
@@ -492,20 +454,17 @@ describe('Utils.prepareHandleVars()', function utilsPrepareHandleVarsTests()
 
         Assert.deepEqual(Utils.prepareHandleVars($input),
         {
-            'var1':
-            {
+            'var1': {
                 'regexp':  new RegExp('%var1%', 'g'),
                 'replace': 'value1'
             },
 
-            'var2.a':
-            {
+            'var2.a': {
                 'regexp':  new RegExp('%var2.a%', 'g'),
                 'replace': 'value2a'
             },
 
-            'var2.b':
-            {
+            'var2.b': {
                 'regexp':  new RegExp('%var2.b%', 'g'),
                 'replace': 'value2b'
             }
@@ -618,8 +577,7 @@ describe('Utils.replaceHandleItem()', function utilsReplaceHandleItemTests()
         var $input = ['test 1 = %var1%', 'test 2 = %var2%'];
         var $vars  = Utils.prepareHandleVars(INPUT_VARS);
 
-        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
-        [
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars), [
             'test 1 = value1',
             'test 2 = %var2%'
         ]);
@@ -628,14 +586,12 @@ describe('Utils.replaceHandleItem()', function utilsReplaceHandleItemTests()
     it('should handle the object', function()
     {
         var $vars  = Utils.prepareHandleVars(INPUT_VARS);
-        var $input =
-        {
+        var $input = {
             'test1': 'test 1 = %var1%',
             'test2': 'test 2 = %var2%'
         };
 
-        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
-        {
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars), {
             'test1': 'test 1 = value1',
             'test2': 'test 2 = %var2%'
         });
@@ -670,8 +626,7 @@ describe('Utils.replaceHandleArray()', function utilsReplaceHandleArrayTests()
         var $input = ['test 1 = %var1%', 'test 2 = %var2%'];
         var $vars  = Utils.prepareHandleVars(INPUT_VARS);
 
-        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
-        [
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars), [
             'test 1 = value1',
             'test 2 = %var2%'
         ]);
@@ -683,14 +638,12 @@ describe('Utils.replaceHandleObject()', function utilsReplaceHandleObjectTests()
     it('should handle the object', function()
     {
         var $vars  = Utils.prepareHandleVars(INPUT_VARS);
-        var $input =
-        {
+        var $input = {
             'test1': 'test 1 = %var1%',
             'test2': 'test 2 = %var2%'
         };
 
-        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
-        {
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars), {
             'test1': 'test 1 = value1',
             'test2': 'test 2 = %var2%'
         });
@@ -703,14 +656,12 @@ describe('Utils.replaceHandleObject()', function utilsReplaceHandleObjectTests()
         /* jshint ignore:end */
 
         var $vars  = Utils.prepareHandleVars(INPUT_VARS);
-        var $input =
-        {
+        var $input = {
             'test1': 'test 1 = %var1%',
             'test2': 'test 2 = %var2%'
         };
 
-        Assert.deepEqual(Utils.replaceHandleItem($input, $vars),
-        {
+        Assert.deepEqual(Utils.replaceHandleItem($input, $vars), {
             'test1': 'test 1 = value1',
             'test2': 'test 2 = %var2%'
         });
@@ -722,15 +673,13 @@ describe('readme examples', function readmeExamples()
     it('should succeed the `How to use` example', function()
     {
         // extend objects
-        var $config = Confirge.extend({},
-        {
+        var $config = Confirge.extend({}, {
             'example': '%var1% and %var2%'
         });
 
         // will replace vars inside the config obj, eg. %var1%, %var2%
         // this will result in { 'example': 'value1 and value2' }
-        $config = Confirge.replace($config,
-        {
+        $config = Confirge.replace($config, {
             'var1': 'value1',
             'var2': 'value2'
         });
@@ -740,22 +689,22 @@ describe('readme examples', function readmeExamples()
 
     it('should succeed the `confirge.replace API` example', function()
     {
-        var $source =
-        {
+        var $source = {
             'config-option':   '%some-var%',
+            'config-option2':  '%another.var%',
             'other-option':    true,
             'supported-types': ['object', '%types.a%']
         };
 
-        var $vars =
-        {
-            'some-var': 'some-value',    // %some-var%
-            'types':    { 'a': 'array' } // %types.a%
+        var $vars = {
+            'some-var':    'some-value',    // %some-var%
+            'another.var': 'another value', // %another.var%
+            'types':       { 'a': 'array' } // %types.a%
         };
 
-        Assert.deepEqual(Confirge.replace($source, $vars),
-        {
+        Assert.deepEqual(Confirge.replace($source, $vars), {
             'config-option':   'some-value',
+            'config-option2':  'another value',
             'other-option':    true,
             'supported-types': ['object', 'array']
         });
