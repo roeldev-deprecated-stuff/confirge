@@ -16,13 +16,17 @@ var Utils           = require('./lib/utils.js');
 
 var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
 
+function noop()
+{
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 Gulp.task('lint', function()
 {
     return Gulp.src(JS_SRC)
         .pipe( GulpJsHint() )
-        .pipe( GulpJsCs() ).on('error', Utils.noop)
+        .pipe( GulpJsCs() ).on('error', noop)
         .pipe( GulpJsCsStylish.combineWithHintResults() )
         .pipe( GulpJsHint.reporter('jshint-stylish') );
 });

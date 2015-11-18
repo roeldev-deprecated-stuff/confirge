@@ -35,6 +35,10 @@ function getFixtureFile($file, $relative)
     return $file;
 }
 
+function noop()
+{
+}
+
 //------------------------------------------------------------------------------
 
 describe('Confirge()', function confirgeTests()
@@ -277,14 +281,6 @@ describe('Confirge.extend()', function confirgeExtendTests()
 });
 
 //------------------------------------------------------------------------------
-
-describe('Utils.noop()', function utilsNoopTests()
-{
-    it('is only here to get 100% code coverage :P', function()
-    {
-        Assert.equal(Utils.noop(), null);
-    });
-});
 
 describe('Utils.findReplacements()', function utilsFindReplacementsTests()
 {
@@ -606,7 +602,7 @@ describe('Utils.replaceHandleItem()', function utilsReplaceHandleItemTests()
 
     it('should return the exact input value [2]', function()
     {
-        var $input = Utils.noop;
+        var $input = noop;
 
         Assert.strictEqual(Utils.replaceHandleItem($input, {}), $input);
     });
