@@ -9,7 +9,7 @@ var Confirge = require('../lib/index.js');
 var Path     = require('path');
 var Utils    = require('../lib/utils.js');
 
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 var OBJ_PLAIN     = { 'title': 'test obj', 'success': true };
 var EXPECTED_YAML = { 'title': 'test yaml', 'success': true };
@@ -22,7 +22,7 @@ var EXPECTED_VARS = {
     }
 };
 
-////////////////////////////////////////////////////////////////////////////////
+// -----------------------------------------------------------------------------
 
 function getFixtureFile($file, $relative)
 {
@@ -39,7 +39,7 @@ function noop()
 {
 }
 
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 describe('Confirge()', function confirgeTests()
 {
@@ -216,7 +216,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
                 'key2-2': [
                     'replace me too! %var1%',
                     'skip me! %var2%',
-                    [ 'down the rabbit hole', 'last %var1% replacement' ]
+                    ['down the rabbit hole', 'last %var1% replacement']
                 ]
             }
         };
@@ -231,7 +231,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
                 'key2-2': [
                     'replace me too! value1',
                     'skip me! %var2%',
-                    [ 'down the rabbit hole', 'last value1 replacement' ]
+                    ['down the rabbit hole', 'last value1 replacement']
                 ]
             }
         });
@@ -280,7 +280,7 @@ describe('Confirge.extend()', function confirgeExtendTests()
     });
 });
 
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 describe('Utils.findReplacements()', function utilsFindReplacementsTests()
 {

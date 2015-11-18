@@ -10,9 +10,8 @@ var GulpJsCs        = require('gulp-jscs');
 var GulpJsCsStylish = require('gulp-jscs-stylish');
 var GulpMocha       = require('gulp-mocha');
 var RunSequence     = require('run-sequence');
-var Utils           = require('./lib/utils.js');
 
-//------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
 
@@ -20,7 +19,7 @@ function noop()
 {
 }
 
-////////////////////////////////////////////////////////////////////////////////
+// -----------------------------------------------------------------------------
 
 Gulp.task('lint', function()
 {
