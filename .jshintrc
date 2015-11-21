@@ -17,6 +17,7 @@
     "unused": true,
 
     "eqnull": true,
+    "esnext": true,
     "laxcomma": false,
     "strict": true,
     "validthis": true,
