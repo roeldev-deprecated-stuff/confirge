@@ -71,16 +71,23 @@ When passing a `string`, it is assumed it is the path to a file. When not absolu
 
 
 --------------------------------------------------------------------------------
-### confirge.read(file)
+### confirge.read(file, extensions)
 Reads a file and returns an `object`. Returns `false` on failure.
 When a function is passed, it is assumed it returns the path to a file wich should be read.
 
 argument | type | description
 ---------|------|------------
 _file_ | `string` or `function` | The source to read from.
+_extensions_ | `array` | Optional alternative file extensions to read.
 
 When passing a `string`, it is assumed it is the path to a file. When not absolute, the path will be used relative from `process.cwd()`. A `function` will be executed and it's result will be used. This result can be one of the accepted values, `string` or `function`.
 
+When reading the main _file_ failes and the optional parameter _extensions_ is passed, the function will try to read alternative files with the specified extensions from this array. Example:
+```js
+confirge.read('.awesome-config', ['json', yml', 'js']);
+```
+
+When `.awesome-config` does not exist, it will try to read a file with any of the alternative file extensions, in order of the values in the `array`: `.awesome-config.json` then `.awesome-config.yml` and finally `.awesome-config.js`. The first file that succeeds will be returned.
 
 --------------------------------------------------------------------------------
 ### confirge.replace(source, vars)

@@ -3,16 +3,16 @@
  */
 'use strict';
 
-const Gulp            = require('gulp');
-const GulpJsHint      = require('gulp-jshint');
-const GulpJsCs        = require('gulp-jscs');
-const GulpJsCsStylish = require('gulp-jscs-stylish');
-const GulpMocha       = require('gulp-mocha');
-const RunSequence     = require('run-sequence');
+var Gulp            = require('gulp');
+var GulpJsHint      = require('gulp-jshint');
+var GulpJsCs        = require('gulp-jscs');
+var GulpJsCsStylish = require('gulp-jscs-stylish');
+var GulpMocha       = require('gulp-mocha');
+var RunSequence     = require('run-sequence');
 
 // -----------------------------------------------------------------------------
 
-const JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
+var JS_SRC = ['gulpfile.js', 'lib/**/*.js', 'test/*.js'];
 
 function noop()
 {

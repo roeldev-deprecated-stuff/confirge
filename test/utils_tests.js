@@ -1,11 +1,13 @@
 /**
  * confirge | test/utils_tests.js
+ *
+ * Tests for utility functions.
  */
 'use strict';
 
-const Assert = require('assert');
-const Utils  = require('../lib/utils.js');
-const Test   = require('./_common.js');
+var Assert = require('assert');
+var Utils  = require('../lib/utils.js');
+var Test   = require('./_common.js');
 
 // -----------------------------------------------------------------------------
 

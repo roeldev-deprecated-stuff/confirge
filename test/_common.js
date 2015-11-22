@@ -1,5 +1,7 @@
 /**
  * confirge | test/_common.js
+ *
+ * Shared test values for all unit tests.
  */
 'use strict';
 
@@ -17,6 +19,16 @@ module.exports =
 
     'EXPECTED_JSON': {
         'title':   'test json',
+        'success': true
+    },
+
+    'FALLBACK1': {
+        'title':   'fallback yaml',
+        'success': true
+    },
+
+    'FALLBACK2': {
+        'title':   'fallback json',
         'success': true
     },
 

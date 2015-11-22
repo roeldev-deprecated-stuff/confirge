@@ -1,10 +1,13 @@
 /**
  * confirge | test/readme-examples_tests.js
+ *
+ * Test for provided examples in the read me file. It would be pretty
+ * embarrassing of those would not work like illustrated :P
  */
 'use strict';
 
-const Assert   = require('assert');
-const Confirge = require('../lib/index.js');
+var Assert   = require('assert');
+var Confirge = require('../lib/index.js');
 
 // -----------------------------------------------------------------------------
 
@@ -13,7 +16,7 @@ describe('readme examples', function readmeExamples()
     it('example `How to use`', function()
     {
         // extend objects
-        let $config = Confirge.extend({}, {
+        var $config = Confirge.extend({}, {
             'example': '%var1% and %var2%'
         });
 
@@ -29,14 +32,14 @@ describe('readme examples', function readmeExamples()
 
     it('example `confirge.replace API`', function()
     {
-        let $source = {
+        var $source = {
             'config-option':   '%some-var%',
             'config-option2':  '%another.var%',
             'other-option':    true,
             'supported-types': ['object', '%types.a%']
         };
 
-        let $vars = {
+        var $vars = {
             'some-var':    'some-value',    // %some-var%
             'another.var': 'another value', // %another.var%
             'types':       { 'a': 'array' } // %types.a%

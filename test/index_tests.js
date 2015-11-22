@@ -1,16 +1,18 @@
 /**
  * confirge | test/index_tests.js
+ *
+ * Tests for main functions.
  */
 'use strict';
 
-const Assert   = require('assert');
-const Confirge = require('../lib/index.js');
-const Path     = require('path');
-const Test     = require('./_common.js');
+var Assert   = require('assert');
+var Confirge = require('../lib/index.js');
+var Path     = require('path');
+var Test     = require('./_common.js');
 
 // -----------------------------------------------------------------------------
 
-function getFixtureFile($file, $relative)
+function getFixtureFilePath($file, $relative)
 {
     $file = Path.resolve(__dirname, './fixtures/' + $file);
     if ($relative === true)
@@ -32,15 +34,17 @@ describe('Confirge()', function confirgeTests()
 
     it('read the relative file path and return an object', function()
     {
-        let $actual = Confirge( getFixtureFile('success.json', true) );
+        var $file   = getFixtureFilePath('success.json', true);
+        var $actual = Confirge($file);
+
         Assert.deepEqual($actual, Test.EXPECTED_JSON);
     });
 
     it('execute the function, read the file, and return an object', function()
     {
-        let $actual = Confirge(function()
+        var $actual = Confirge(function()
         {
-            return getFixtureFile('success.yml');
+            return getFixtureFilePath('success.yml');
         });
 
         Assert.deepEqual($actual, Test.EXPECTED_YAML);
@@ -48,9 +52,9 @@ describe('Confirge()', function confirgeTests()
 
     it('execute the function and return an object', function()
     {
-        let $actual = Confirge(function()
+        var $actual = Confirge(function()
         {
-            return Confirge.read( getFixtureFile('success.yml') );
+            return Confirge.read(getFixtureFilePath('success.yml'));
         });
 
         Assert.deepEqual($actual, Test.EXPECTED_YAML);
@@ -58,7 +62,7 @@ describe('Confirge()', function confirgeTests()
 
     it('execute the function and return the same object', function()
     {
-        let $actual = Confirge(function()
+        var $actual = Confirge(function()
         {
             return Test.OBJ_PLAIN;
         });
@@ -69,45 +73,101 @@ describe('Confirge()', function confirgeTests()
 
 describe('Confirge.read()', function confirgeReadTests()
 {
-    it('read the yaml file and return an object', function()
+    it('read the yaml file and return an object [1]', function()
     {
-        let $file   = getFixtureFile('success.yml');
-        let $actual = Confirge.read($file);
+        var $file   = getFixtureFilePath('success.yml');
+        var $actual = Confirge.read($file);
 
         Assert.deepEqual($actual, Test.EXPECTED_YAML);
     });
 
-    it('read the json file and return an object', function()
+    it('read the yaml file and return an object [2]', function()
     {
-        let $actual = Confirge.read( getFixtureFile('success.json') );
+        var $file   = getFixtureFilePath('success');
+        var $actual = Confirge.read($file, ['yml', 'json']);
+
+        Assert.deepEqual($actual, Test.EXPECTED_YAML);
+    });
+
+    it('read the json file and return an object [1]', function()
+    {
+        var $file   = getFixtureFilePath('success.json');
+        var $actual = Confirge.read($file);
+
+        Assert.deepEqual($actual, Test.EXPECTED_JSON);
+    });
+
+    it('read the json file and return an object [2]', function()
+    {
+        var $file   = getFixtureFilePath('success');
+        var $actual = Confirge.read($file, ['json', 'yml']);
+
         Assert.deepEqual($actual, Test.EXPECTED_JSON);
     });
 
     it('read the file from the function, and return an object', function()
     {
-        let $input = function()
+        var $input = function()
         {
-            return getFixtureFile('success.json');
+            return getFixtureFilePath('success.json');
         };
 
         Assert.deepEqual(Confirge.read($input), Test.EXPECTED_JSON);
     });
 
+    it('read the file with fallback yml extension [1]', function()
+    {
+        var $file   = getFixtureFilePath('fallback1.json');
+        var $actual = Confirge.read($file, ['yml']);
+
+        Assert.deepEqual($actual, Test.FALLBACK1);
+    });
+
+    it('read the file with fallback yml extension [2]', function()
+    {
+        var $file   = getFixtureFilePath('fallback1.json');
+        var $actual = Confirge.read($file, ['json', 'txt', 'yml']);
+
+        Assert.deepEqual($actual, Test.FALLBACK1);
+    });
+
+    it('read the file with fallback json extension [1]', function()
+    {
+        var $file   = getFixtureFilePath('fallback2.yml');
+        var $actual = Confirge.read($file, ['json']);
+
+        Assert.deepEqual($actual, Test.FALLBACK2);
+    });
+
+    it('read the file with fallback json extension [2]', function()
+    {
+        var $file   = getFixtureFilePath('fallback2');
+        var $actual = Confirge.read($file, ['yml', 'json', 'txt']);
+
+        Assert.deepEqual($actual, Test.FALLBACK2);
+    });
+
     it('fail reading the yaml file', function()
     {
-        let $actual = Confirge.read( getFixtureFile('failure.yml') );
+        var $file   = getFixtureFilePath('failure.yml');
+        var $actual = Confirge.read($file);
+
         Assert.strictEqual($actual, false);
     });
 
     it('fail reading the json file', function()
     {
-        let $actual = Confirge.read( getFixtureFile('failure.json') );
+        var $file   = getFixtureFilePath('failure.json');
+        var $actual = Confirge.read($file);
+
         Assert.strictEqual($actual, false);
     });
 
     it('fail reading the unexisting file', function()
     {
-        let $actual = Confirge.read( getFixtureFile('does-not.exists') );
+        var $file   = getFixtureFilePath('does-not.exists');
+        var $actual = Confirge.read($file);
+
         Assert.strictEqual($actual, false);
     });
 
@@ -123,7 +183,7 @@ describe('Confirge.read()', function confirgeReadTests()
 
     it('fail when passing an invald path [2]', function()
     {
-        let $input = function()
+        var $input = function()
         {
             return {};
         };
@@ -136,7 +196,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
 {
     it('replace a string var', function()
     {
-        let $input = { 'str': '%var1%' };
+        var $input = { 'str': '%var1%' };
 
         Assert.deepEqual(Confirge.replace($input, Test.INPUT_VARS), {
             'str': 'value1'
@@ -145,7 +205,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
 
     it('replace a string var, twice', function()
     {
-        let $input = { 'str': '%var1% is equal to %var1%' };
+        var $input = { 'str': '%var1% is equal to %var1%' };
 
         Assert.deepEqual(Confirge.replace($input, Test.INPUT_VARS), {
             'str': 'value1 is equal to value1'
@@ -154,7 +214,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
 
     it('replace a string var and keep the other', function()
     {
-        let $input = { 'str': '%var1% is not equal to %var2%' };
+        var $input = { 'str': '%var1% is not equal to %var2%' };
 
         Assert.deepEqual(Confirge.replace($input, Test.INPUT_VARS), {
             'str': 'value1 is not equal to %var2%'
@@ -163,13 +223,13 @@ describe('Confirge.replace()', function confirgeReplaceTests()
 
     it('return the exact same object [1]', function()
     {
-        let $input = { 'str': 'do %not% replace %anything%!' };
+        var $input = { 'str': 'do %not% replace %anything%!' };
         Assert.strictEqual(Confirge.replace($input, Test.INPUT_VARS), $input);
     });
 
     it('return the exact same object [2]', function()
     {
-        let $input = [
+        var $input = [
             'test',
             '123',
 
@@ -184,7 +244,7 @@ describe('Confirge.replace()', function confirgeReplaceTests()
 
     it('replace the vars deep inside the object', function()
     {
-        let $input = {
+        var $input = {
             'key1': {
                 'key1-2': 'replace me! %var1%'
             },
@@ -223,7 +283,7 @@ describe('Confirge.extend()', function confirgeExtendTests()
 
     it('extend the object and return an object [1]', function()
     {
-        let $actual = Confirge.extend(Test.OBJ_PLAIN, Test.INPUT_VARS);
+        var $actual = Confirge.extend(Test.OBJ_PLAIN, Test.INPUT_VARS);
 
         Assert.deepEqual($actual, {
             'title':   'test obj',
@@ -234,7 +294,7 @@ describe('Confirge.extend()', function confirgeExtendTests()
 
     it('extend the object and return an object [2]', function()
     {
-        let $actual = Confirge.extend(Test.OBJ_PLAIN, function()
+        var $actual = Confirge.extend(Test.OBJ_PLAIN, function()
         {
             return Test.INPUT_VARS;
         });
@@ -253,7 +313,7 @@ describe('Confirge.extend()', function confirgeExtendTests()
 
     it('return the exact same object [2]', function()
     {
-        let $actual = Confirge.extend(Test.OBJ_PLAIN, false);
+        var $actual = Confirge.extend(Test.OBJ_PLAIN, false);
         Assert.strictEqual($actual, Test.OBJ_PLAIN);
     });
 });
