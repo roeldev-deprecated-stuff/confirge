@@ -4,7 +4,7 @@
   "version": "0.4.0",
   "homepage": "https://github.com/roeldev/confirge",
   "description": "Flexible configuration!",
-  "author": "Roel Schut",
+  "author": "Roel Schut (http://roelschut.nl)",
   "license": "GPL-2.0+",
   "main": "lib/index.js",
   "repository": {
