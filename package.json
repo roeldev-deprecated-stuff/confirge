@@ -4,12 +4,14 @@
   "version": "0.3.0",
   "homepage": "https://github.com/roeldev/confirge",
   "description": "Flexible configuration!",
+  "author": "Roel Schut",
   "license": "GPL-2.0+",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/roeldev/confirge.git"
   },
+  "bugs": "https://github.com/roeldev/confirge/issues",
   "engines": {
     "node": ">=0.12"
   },
