@@ -139,3 +139,7 @@ _..._ | `string`, `function` or `object` | A source to extend the base `object` 
 [api-confirge-read]: #confirgereadfile
 [api-confirge-replace]: #confirgereplacesource-vars
 [api-confirge-extend]: #confirgeextendsource
+
+--------------------------------------------------------------------------------
+## License
+[GPL-2.0+](LICENSE) © 2015 [Roel Schut](http://roelschut.nl)
