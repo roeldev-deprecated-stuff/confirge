@@ -84,7 +84,7 @@ When passing a `string`, it is assumed it is the path to a file. When not absolu
 
 When reading the main _file_ failes and the optional parameter _extensions_ is passed, the function will try to read alternative files with the specified extensions from this array. Example:
 ```js
-confirge.read('.awesome-config', ['json', yml', 'js']);
+confirge.read('.awesome-config', ['json', 'yml', 'js']);
 ```
 
 When `.awesome-config` does not exist, it will try to read a file with any of the alternative file extensions, in order of the values in the `array`: `.awesome-config.json` then `.awesome-config.yml` and finally `.awesome-config.js`. The first file that succeeds will be returned.
