@@ -9,7 +9,7 @@ var Assert = require('assert');
 var Utils  = require('../lib/utils.js');
 var Test   = require('./_common.js');
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 describe('Utils.findReplacements()', function utilsFindReplacementsTests()
 {

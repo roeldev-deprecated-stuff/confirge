@@ -9,7 +9,7 @@
 var Assert   = require('assert');
 var Confirge = require('../lib/index.js');
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 describe('readme examples', function readmeExamples()
 {

@@ -23,7 +23,7 @@ function getFixtureFilePath($file, $relative)
     return $file;
 }
 
-// -----------------------------------------------------------------------------
+// // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 describe('Confirge()', function confirgeTests()
 {
