@@ -19,12 +19,13 @@
     "setup": "npm install",
     "start": "npm install && gulp watch",
     "test": "mocha --reporter spec --check-leaks",
-    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks"
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks",
+    "depcheck": "depcheck --ignores=mocha-lcov-reporter"
   },
   "dependencies": {
     "deep-extend": "^0.4.0",
     "js-yaml": "^3.4.2",
-    "underscore": "^1.8.3"
+    "lodash": "^4.6.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
