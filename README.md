@@ -1,3 +1,5 @@
+# This project is deprecated and abandoned!
+
 # confirge
 
   [![NPM Version][npm-img]][npm-url]
